@@ -2,7 +2,19 @@ package com.curso.tienda.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.GenerationType;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="ordenes")
 public class Orden {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer Id;
 	private String numero;
 	private Date fechaCreacion;
@@ -10,6 +22,12 @@ public class Orden {
 	
 	private double total;
 
+	@ManyToOne
+	public Usuario usuario;
+	
+	@OneToOne(mappedBy="orden")
+	private DetalleOrden detalle;
+	
 	public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida, double total) {
 		super();
 		Id = id;
@@ -67,6 +85,22 @@ public void setTotal(double total) {
 public String toString() {
 	return "Orden [Id=" + Id + ", numero=" + numero + ", fechaCreacion=" + fechaCreacion + ", fechaRecibida="
 			+ fechaRecibida + ", total=" + total + "]";
+}
+
+public Usuario getUsuario() {
+	return usuario;
+}
+
+public void setUsuario(Usuario usuario) {
+	this.usuario = usuario;
+}
+
+public DetalleOrden getDetalle() {
+	return detalle;
+}
+
+public void setDetalle(DetalleOrden detalle) {
+	this.detalle = detalle;
 }
 
 
